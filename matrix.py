@@ -1,5 +1,4 @@
 import random
-
 from copy import deepcopy
 
 
@@ -15,7 +14,6 @@ class Matrix:
         self.n = [ [ (random.choice(x)) for i in range(cols) ] for j in range(rows) ]
 
 
-
     def add(self,m):
         
         self.c = [[None]*self.cols for i in range(self.rows)]
@@ -28,12 +26,10 @@ class Matrix:
             for i in range(self.rows):
                 for j in range(self.cols):
                     md.n[i][j] = self.n[i][j] + m.n[i][j]
-        
             return md
 
     
     def sub(self,m):
-        """return a new Matrix object after substraction"""
 
         self.d =  [[None]*self.cols for i in range(self.rows)]
         me = Matrix(self.rows,self.cols)
@@ -45,7 +41,6 @@ class Matrix:
             for i in range(self.rows):
                 for j in range(self.cols):
                     me.n[i][j] = self.n[i][j] - m.n[i][j]
-        
             return me
         
         
@@ -55,7 +50,6 @@ class Matrix:
         mf = Matrix(self.rows,m.cols)
 
         if self.cols != m.rows :
-            
             print("Matrix's Size should be in the same size")
 
         else:    
@@ -64,7 +58,6 @@ class Matrix:
                     mf.n[i][j] = 0
                     for k in range (self.cols):
                         mf.n[i][j] += self.n[i][k] * m.n[k][j]
-            
             return mf
         
         
