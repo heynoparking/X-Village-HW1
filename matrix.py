@@ -5,144 +5,128 @@ from copy import deepcopy
 
 class Matrix:
 
-    def __init__(self):
+    def __init__(self,rows,cols):
 
-        k=input("Enter A matrix arows:")
-        self.arows=int(k)
-        h=input("Enter A matrix acols:")
-        self.acols=int(h)
-
-        l=input("Enter B matrix arows:")
-        self.brows=int(l)
-        g=input("Enter B matrix acols:")
-        self.bcols=int(g)
+        self.rows = rows
+        self.cols = cols
 
         x =[1,2,3,4,5,6,7,8,9]
-        y =[1,2,3,4,5,6,7,8,9]
-
         
-        self.n = [ [ (random.choice(x)) for i in range(self.acols) ] for j in range(self.arows) ]
-        self.m = [ [ (random.choice(y)) for i in range(self.bcols) ] for j in range(self.brows) ]
-            
-        print(self.n)
-        print(self.m)
+        self.n = [ [ (random.choice(x)) for i in range(cols) ] for j in range(rows) ]
 
-        for i in range(self.arows):
-            for j in range(self.acols):
-                print (self.n[i][j], end = ' ')
-            print ('')
 
-        for i in range(self.brows):
-            for j in range(self.bcols):
-                print (self.m[i][j], end = ' ')
-            print ('')
 
-        """Construct a (nrows X ncols) matrix"""
+    def add(self,m):
         
-        
+        self.c = [[None]*self.cols for i in range(self.rows)]
+        md = Matrix(self.rows,self.cols)
 
-        pass
+        if self.rows != m.rows or self.cols != m.cols:
+            print("Matrix's Size should be in the same size")
 
-    def add(self):
-        """return a new Matrix object after summation"""
-        
-        self.c = [[None]*self.acols for i in range(self.arows)]
-
-        if self.arows != self.brows or self.acols !=self.bcols:
-            print ("Matrix's Size should be in the same size")
         else:    
-            for i in range(self.arows):
-                for j in range(self.acols):
-                     self.c[i][j] = self.n[i][j] + self.m[i][j]
-        return self.c
+            for i in range(self.rows):
+                for j in range(self.cols):
+                    md.n[i][j] = self.n[i][j] + m.n[i][j]
+        
+            return md
 
     
-
-
-    def sub(self):
+    def sub(self,m):
         """return a new Matrix object after substraction"""
 
-        self.d =  [[None]*self.acols for i in range(self.arows)]
-        self.w = "Matrix's Size should be in the same size"
+        self.d =  [[None]*self.cols for i in range(self.rows)]
+        me = Matrix(self.rows,self.cols)
         
-        if self.arows != self.brows or self.acols !=self.bcols:
-            return self.w
+        if self.rows != m.rows or self.cols != m.cols:
+            print("Matrix's Size should be in the same size")
+
         else:    
-            for i in range(self.arows):
-                for j in range(self.acols):
-                     self.d[i][j] = self.n[i][j] - self.m[i][j]
-        return self.d
+            for i in range(self.rows):
+                for j in range(self.cols):
+                    me.n[i][j] = self.n[i][j] - m.n[i][j]
+        
+            return me
         
         
-        
+    def mul(self,m):
 
-    def mul(self):
-        """return a new Matrix object after multiplication"""
+        self.e = [[None]*self.cols for i in range(self.rows)]
+        mf = Matrix(self.rows,m.cols)
 
-        self.e = [[None]*self.acols for i in range(self.arows)]
-        if self.arows != self.brows or self.acols !=self.bcols:
-            return self.w
+        if self.cols != m.rows :
+            
+            print("Matrix's Size should be in the same size")
+
         else:    
-            for i in range(self.arows):
-                for j in range(self.acols):
-                    self.e[i][j] = (self.n[i][j]) * (self.m[i][j])
-        return self.e
+            for i in range(self.rows):
+                for j in range(m.cols):
+                    mf.n[i][j] = 0
+                    for k in range (self.cols):
+                        mf.n[i][j] += self.n[i][k] * m.n[k][j]
+            
+            return mf
         
         
-
     def transpose(self):
-        """return a new Matrix object after transpose"""
         
-        self.f = [[None]*self.acols for j in range(self.arows)]
+        self.f = [[None]*self.cols for j in range(self.rows)]
+        mg = Matrix(self.rows,self.cols)
 
-        for i in range(self.arows):
-                for j in range(self.acols):
-                    self.f[i][j] = self.e[j][i] 
-        return self.f
-
+        for i in range(self.rows):
+            for j in range(self.cols):
+                mg.n[i][j] = self.n[j][i] 
+        return mg
 
         
-    
     def display(self):
-        """Display the content in the matrix"""
         
-        print("====== A+B =====")
-
-        for i in range(self.arows):
-            for j in range(self.acols):
-                print (self.c[i][j],end=' ')
+        for i in range(self.rows):
+            for j in range(self.cols):
+                print (self.n[i][j],end=' ')
                 
             print ('')
 
 
-        print("===== A-B =====")
-        
-        for i in range(self.arows):
-            for j in range(self.acols):
-                print (self.d[i][j],end=' ')
-                
-            print ('')
+k=input("Enter A matrix arows:")
+arows=int(k)
+h=input("Enter A matrix acols:")
+acols=int(h)
 
-        print("===== A*B =====")
+l=input("Enter B matrix arows:")
+brows=int(l)
+g=input("Enter B matrix acols:")
+bcols=int(g)
 
-        for i in range(self.arows):
-            for j in range(self.acols):
-                print (self.e[i][j],end=' ')
-                
-            print ('')
 
-        print("===== the transpose of A*B =====")
+ma = Matrix(arows,acols)
+mb = Matrix(brows,bcols)
 
-        for i in range(self.arows):
-            for j in range(self.acols):
-                print (self.f[i][j],end=' ')
+print("=========== MatrixA ============")
+ma.display()
 
-            print ('')
+print("=========== MatrixB ============")
+mb.display()
 
-        
-m = Matrix()
-m.add()
-m.sub()
-m.mul()
-m.transpose()
-m.display()
+print("==============A+B ==============")
+C = ma.add(mb)
+if C != None :
+    C.display()
+
+print("============== A-B ==============")
+C = ma.sub(mb)
+if C != None :
+    C.display()
+
+print("============== A*B ==============")
+C = ma.mul(mb)
+
+if C != None :
+    C.display()
+    C = C.transpose()
+    print("====== the transpose of A*B =====")
+    C.display()
+
+else:
+    print("====== the transpose of A*B =====")
+    print("Matrix's Size should be in the same size")
